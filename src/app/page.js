@@ -276,7 +276,7 @@ export default function LandingPage() {
                   <div>
                     <p className="text-xs text-muted">Current dataset</p>
                     <p className="text-sm font-semibold text-foreground">
-                      Breast Cancer (Demo)
+                      {statsLoading ? "Loading dataset..." : stats?.dataset}
                     </p>
                   </div>
                   <span

@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import { Inter, Space_Grotesk, JetBrains_Mono } from "next/font/google";
 
 export const metadata = {
+  metadataBase: new URL("https://etherml.vercel.app"),
   title: "EtherML - Train and Compare Machine Learning Models",
   description:
     "EtherML is a powerful ML dashboard to upload datasets, auto-train models and compare their performance live.",
