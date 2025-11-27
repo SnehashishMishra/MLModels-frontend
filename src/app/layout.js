@@ -5,8 +5,37 @@ import Navbar from "@/components/Navbar";
 import { Inter, Space_Grotesk, JetBrains_Mono } from "next/font/google";
 
 export const metadata = {
-  title: "ML Dashboard",
-  description: "ML Model Comparison Dashboard with FastAPI backend",
+  title: "EtherML - Train and Compare Machine Learning Models",
+  description:
+    "EtherML is a powerful ML dashboard to upload datasets, auto-train models and compare their performance live.",
+
+  openGraph: {
+    title: "EtherML - ML Model Comparison Platform",
+    description:
+      "Upload datasets, auto-train multiple machine learning models and discover the best one – in your browser.",
+    url: "https://etherml.vercel.app",
+    siteName: "EtherML",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "EtherML AI Dashboard",
+      },
+    ],
+    type: "website",
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "EtherML - ML Model Comparison Platform",
+    description: "Auto-train and compare machine learning models with EtherML.",
+    images: ["/og-image.png"],
+  },
+
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });

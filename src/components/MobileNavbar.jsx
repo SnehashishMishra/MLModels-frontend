@@ -59,7 +59,7 @@ export default function MobileNavbar() {
       {/* TOP BAR */}
       <div className="flex md:hidden items-center justify-between px-4 py-3 border-b border-border bg-card/90 backdrop-blur-lg sticky top-0 z-50">
         <Link href="/" className="text-lg font-bold text-accent">
-          ML Dashboard
+          EtherML
         </Link>
 
         <button

@@ -15,9 +15,7 @@ export default function AboutPage() {
     <div className="max-w-4xl mx-auto flex flex-col gap-10 py-6">
       {/* ================== HEADER ================== */}
       <motion.section {...fadeUp}>
-        <h1 className="text-3xl font-bold text-accent mb-2">
-          About this Machine Learning Dashboard
-        </h1>
+        <h1 className="text-3xl font-bold text-accent mb-2">About EtherML</h1>
 
         <p className="text-sm text-muted leading-relaxed">
           This project is an end-to-end <b>Machine Learning (ML)</b> Model
@@ -190,7 +188,7 @@ export default function AboutPage() {
         {...fadeUp}
         className="text-center text-xs text-muted mt-6"
       >
-        © {year} — ML Dashboard | Built & Designed by{" "}
+        © {year} — EtherML | Built & Designed by{" "}
         <span className="text-accent font-semibold">Snehashish</span>
       </motion.section>
     </div>

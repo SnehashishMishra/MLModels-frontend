@@ -130,7 +130,7 @@ export default function LandingPage() {
             >
               <Sparkles className="w-3 h-3 text-accent" />
               <span className="uppercase tracking-wide text-accent">
-                ML Model Comparison Dashboard
+                EtherML — Model Intelligence Platform
               </span>
             </motion.div>
 
@@ -483,8 +483,8 @@ export default function LandingPage() {
 
             <div className="pt-3 text-[11px] text-muted">
               Designed & built by{" "}
-              <span className="text-accent font-semibold">Snehashish</span> as a
-              production-style ML dashboard project.
+              <span className="text-accent font-semibold">Snehashish</span> —
+              EtherML
             </div>
           </motion.div>
         </section>

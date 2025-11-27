@@ -52,7 +52,7 @@ export default function DesktopNavbar() {
           href="/"
           className="text-lg font-bold tracking-wide text-accent whitespace-nowrap"
         >
-          ML Dashboard
+          EtherML
         </Link>
 
         {/* NAV LINKS */}
