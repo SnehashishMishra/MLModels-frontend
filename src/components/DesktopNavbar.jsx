@@ -50,9 +50,12 @@ export default function DesktopNavbar() {
         {/* LOGO */}
         <Link
           href="/"
-          className="text-lg font-bold tracking-wide text-accent whitespace-nowrap"
+          className="text-lg font-bold tracking-wide text-accent whitespace-nowrap flex gap-0.5 items-center justify-center"
         >
-          EtherML
+          Ether
+          <span className="bg-accent text-background px-0.5 rounded-sm">
+            ML
+          </span>
         </Link>
 
         {/* NAV LINKS */}
