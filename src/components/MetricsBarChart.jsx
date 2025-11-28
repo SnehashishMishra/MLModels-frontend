@@ -13,22 +13,24 @@ import {
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
 
-// Read CSS variable safely
-const css = (v) =>
-  getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+/* Read CSS variable safely */
+const css = (v, fb = "#999") =>
+  typeof window === "undefined"
+    ? fb
+    : getComputedStyle(document.documentElement).getPropertyValue(v).trim();
 
-// Shorten long labels for mobile
+/* Shorten labels for small screens */
 const shorten = (label, max = 10) =>
   label.length > max ? label.slice(0, max) + "…" : label;
 
 export default function MetricsBarChart({ models }) {
-  const [chartKey, setChartKey] = useState(0);
-  const [chartData, setChartData] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [chartData, setChartData] = useState(null);
+  const [chartKey, setChartKey] = useState(0);
 
   if (!models || models.length === 0) return null;
 
-  // Detect screen size
+  /* Detect mobile screen */
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 640);
     check();
@@ -36,7 +38,7 @@ export default function MetricsBarChart({ models }) {
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  // Re-render chart on theme change
+  /* Re-render on theme change */
   useEffect(() => {
     const observer = new MutationObserver(() => {
       setChartKey((k) => k + 1);
@@ -50,7 +52,7 @@ export default function MetricsBarChart({ models }) {
     return () => observer.disconnect();
   }, []);
 
-  // Build data
+  /* Build Chart Data */
   useEffect(() => {
     const labels = models.map((m) => (isMobile ? shorten(m.name) : m.name));
 
@@ -59,48 +61,44 @@ export default function MetricsBarChart({ models }) {
       datasets: [
         {
           label: "Accuracy",
-          data: models.map((m) => m.accuracy),
-          backgroundColor: css("--chart-5"),
-          borderRadius: 8,
-
-          // ✅ FINAL MOBILE FIX
-          barThickness: isMobile ? 5 : 28,
-          categoryPercentage: isMobile ? 0.45 : 0.8,
-          barPercentage: isMobile ? 0.45 : 0.9,
+          data: models.map((m) => Number(m.accuracy.toFixed(3))), // precise
+          backgroundColor: css("--chart-5", "rgba(56,189,248,0.8)"),
+          borderRadius: isMobile ? 5 : 10,
+          barThickness: isMobile ? 8 : 30,
         },
         {
           label: "F1 Score",
-          data: models.map((m) => m.f1),
-          backgroundColor: css("--chart-3"),
-          borderRadius: 8,
-
-          // ✅ FINAL MOBILE FIX
-          barThickness: isMobile ? 5 : 28,
-          categoryPercentage: isMobile ? 0.45 : 0.8,
-          barPercentage: isMobile ? 0.45 : 0.9,
+          data: models.map((m) => Number(m.f1.toFixed(3))), // precise
+          backgroundColor: css("--chart-3", "rgba(167,139,250,0.8)"),
+          borderRadius: isMobile ? 5 : 10,
+          barThickness: isMobile ? 8 : 30,
         },
       ],
     });
-  }, [models, chartKey, isMobile]);
+  }, [models, isMobile, chartKey]);
 
   if (!chartData) return null;
 
   return (
-    <div className="glass p-4">
-      <h2 className="text-lg font-semibold text-accent mb-3">
-        Model Accuracy & F1
+    <div className="glass p-4 sm:p-5 rounded-xl border border-border/60">
+      <h2 className="text-lg font-semibold text-accent mb-4">
+        Model Accuracy & F1 Score
       </h2>
 
-      <div className="relative w-full h-[280px] sm:h-[350px] md:h-[450px]">
+      <div className="relative w-full h-[260px] sm:h-[330px] md:h-[430px]">
         <Bar
           key={chartKey}
           data={chartData}
           options={{
             responsive: true,
             maintainAspectRatio: false,
+            animation: {
+              duration: 900,
+              easing: "easeOutQuart",
+            },
 
             layout: {
-              padding: isMobile ? 6 : 10,
+              padding: isMobile ? 4 : 10,
             },
 
             plugins: {
@@ -110,19 +108,28 @@ export default function MetricsBarChart({ models }) {
                   color: css("--foreground"),
                   font: {
                     size: isMobile ? 10 : 12,
+                    weight: "500",
                   },
                   padding: 12,
                 },
               },
 
               tooltip: {
+                backgroundColor: css("--card"),
+                titleColor: css("--foreground"),
+                bodyColor: css("--foreground"),
+                padding: 10,
+                cornerRadius: 8,
                 callbacks: {
-                  title: (tooltipItems) => {
-                    const index = tooltipItems[0].dataIndex;
-                    return models[index]?.name || ""; // ✅ FULL model name
+                  /* Show full model name */
+                  title: (items) => {
+                    const idx = items[0].dataIndex;
+                    return models[idx]?.name || "";
                   },
-                  label: (tooltipItem) => {
-                    return `${tooltipItem.dataset.label}: ${tooltipItem.formattedValue}`;
+                  /* 3-decimal metric precision */
+                  label: (item) => {
+                    const v = Number(item.raw).toFixed(3);
+                    return `${item.dataset.label}: ${v}`;
                   },
                 },
               },
@@ -130,26 +137,22 @@ export default function MetricsBarChart({ models }) {
 
             scales: {
               x: {
-                offset: true,
                 ticks: {
                   color: css("--accent"),
-                  font: {
-                    size: isMobile ? 9 : 11,
-                  },
+                  font: { size: isMobile ? 9 : 11 },
                 },
                 grid: {
                   color: css("--border"),
                 },
               },
+
               y: {
                 beginAtZero: true,
                 max: 1,
                 ticks: {
                   color: css("--accent"),
-                  font: {
-                    size: isMobile ? 9 : 11,
-                  },
-                  stepSize: 0.2,
+                  font: { size: isMobile ? 9 : 11 },
+                  callback: (value) => value.toFixed(2), // axis precision
                 },
                 grid: {
                   color: css("--border"),

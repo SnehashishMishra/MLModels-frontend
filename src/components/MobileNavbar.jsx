@@ -10,14 +10,15 @@ import useCurrentUser from "@/hooks/useCurrentUser";
 
 const PUBLIC_LINKS = [
   { name: "Overview", path: "/overview" }, // ✅ changed from "/"
+  { name: "Report", path: "/report" },
   { name: "About", path: "/about" },
   { name: "Models", path: "/models" },
 ];
 
 const PRIVATE_LINKS = [
-  { name: "User", path: "/user" },
   { name: "Dataset", path: "/dataset-preview" },
   { name: "Train Model", path: "/train" },
+  { name: "User", path: "/user" },
 ];
 
 const ADMIN_LINKS = [{ name: "Admin", path: "/admin" }];
