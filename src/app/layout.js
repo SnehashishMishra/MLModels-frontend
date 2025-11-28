@@ -16,6 +16,7 @@ export const metadata = {
       "Upload datasets, auto-train multiple machine learning models and discover the best one – in your browser.",
     url: "https://etherml.vercel.app",
     siteName: "EtherML",
+    locale: "en_US",
     images: [
       {
         url: "/og-image.png",
@@ -55,7 +56,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`$
+        className={`
           ${inter.variable}
           min-h-screen
           bg-linear-to-br from-background via-border to-background
