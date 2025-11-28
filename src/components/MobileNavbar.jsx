@@ -92,9 +92,16 @@ export default function MobileNavbar() {
               bg-background/95
               backdrop-blur-xl
               flex flex-col
-              pt-[60px]
+              pt-4
             "
           >
+            <button
+              onClick={() => setOpen((prev) => !prev)}
+              className="p-1 w-[26px] rounded-md border border-foreground place-self-end mr-6"
+              aria-label="Open mobile menu"
+            >
+              {open ? <X size={16} /> : <Menu size={18} />}
+            </button>
             <nav className="flex flex-col gap-2 px-6">
               {finalLinks.map((link) => {
                 const isActive = pathname === link.path;
@@ -104,7 +111,7 @@ export default function MobileNavbar() {
                     key={link.path}
                     href={link.path}
                     onClick={() => setOpen(false)}
-                    className={`px-4 py-3 rounded-lg text-lg text-center font-medium transition-all ${
+                    className={`px-4 py-2 rounded-lg text-lg text-center font-medium transition-all ${
                       isActive
                         ? "bg-accent text-primary-foreground"
                         : "text-foreground/80 hover:bg-accent/20"
@@ -118,32 +125,36 @@ export default function MobileNavbar() {
 
             {/* THEME + AUTH BELOW LINKS */}
             <div className="mt-8 flex flex-col items-center gap-4 border-t border-border pt-6 px-6">
-              <ThemeToggle onSelect={() => setOpen(false)} />
-
               {user ? (
-                <button
-                  onClick={handleLogout}
-                  className="text-xs px-4 py-2 rounded-full border border-border hover:bg-accent/10"
-                >
-                  Logout
-                </button>
+                <div className="flex gap-3 items-center">
+                  <ThemeToggle onSelect={() => setOpen(false)} />
+                  <button
+                    onClick={handleLogout}
+                    className="text-xs px-4 py-2 rounded-full border border-border hover:bg-accent/10"
+                  >
+                    Logout
+                  </button>
+                </div>
               ) : (
-                <div className="flex gap-3 text-xs">
-                  <Link
-                    href="/login"
-                    onClick={() => setOpen(false)}
-                    className="px-4 py-2 rounded-full border border-border hover:bg-accent/10"
-                  >
-                    Login
-                  </Link>
+                <div className="flex flex-col gap-8 items-center">
+                  <ThemeToggle onSelect={() => setOpen(false)} />
+                  <div className="flex gap-3 text-xs">
+                    <Link
+                      href="/login"
+                      onClick={() => setOpen(false)}
+                      className="px-4 py-2 rounded-full border border-border hover:bg-accent/10"
+                    >
+                      Login
+                    </Link>
 
-                  <Link
-                    href="/signup"
-                    onClick={() => setOpen(false)}
-                    className="px-4 py-2 rounded-full bg-accent text-background hover:opacity-90"
-                  >
-                    Sign Up
-                  </Link>
+                    <Link
+                      href="/signup"
+                      onClick={() => setOpen(false)}
+                      className="px-4 py-2 rounded-full bg-accent text-background hover:opacity-90"
+                    >
+                      Sign Up
+                    </Link>
+                  </div>
                 </div>
               )}
             </div>
